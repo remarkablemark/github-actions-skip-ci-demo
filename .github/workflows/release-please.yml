@@ -11,25 +11,19 @@ permissions:
 jobs:
   release-please:
     runs-on: ubuntu-latest
-    outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      release_branch: ${{ fromJson(steps.release.outputs.pr).headBranchName }}
     steps:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
           release-type: simple
 
-  skip-ci:
-    needs: release-please
-    runs-on: ubuntu-latest
-    if: needs.release-please.outputs.release_created
-    steps:
-      - uses: actions/checkout@v3
+      - if: steps.release.outputs.release_created
+        uses: actions/checkout@v3
         with:
-          ref: ${{ needs.release-please.outputs.release_branch }}
+          ref: ${{ fromJson(steps.release.outputs.pr).headBranchName }}
 
-      - run: |
+      - if: steps.release.outputs.release_created
+        run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           COMMIT_MESSAGE=$(git log -1 --format=%s)
