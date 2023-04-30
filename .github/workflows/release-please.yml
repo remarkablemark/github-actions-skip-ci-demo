@@ -11,13 +11,13 @@ permissions:
   deployments: write
   id-token: write
   issues: write
-  # discussions: read|write|none
-  # packages: read|write|none
-  # pages: read|write|none
+  discussions: write
+  packages: write
+  pages: write
   pull-requests: write
-  # repository-projects: read|write|none
-  # security-events: read|write|none
-  # statuses: read|write|none
+  repository-projects: write
+  security-events: write
+  statuses: write
 
 jobs:
   release-please:
