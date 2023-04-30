@@ -18,12 +18,12 @@ jobs:
           release-type: simple
           pull-request-title-pattern: 'chore${scope}: release${component} ${version} [skip ci]'
 
-      - if: steps.release.outputs.release_created
+      - if: ${{ steps.release.outputs.release_created }}
         uses: actions/checkout@v3
         with:
           ref: ${{ fromJson(steps.release.outputs.pr).headBranchName }}
 
-      - if: steps.release.outputs.release_created
+      - if: ${{ steps.release.outputs.release_created }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
