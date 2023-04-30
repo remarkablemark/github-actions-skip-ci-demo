@@ -5,8 +5,19 @@ on:
       - master
 
 permissions:
+  actions: write
+  # checks: read|write|none
   contents: write
+  # deployments: read|write|none
+  # id-token: read|write|none
+  # issues: read|write|none
+  # discussions: read|write|none
+  # packages: read|write|none
+  # pages: read|write|none
   pull-requests: write
+  # repository-projects: read|write|none
+  # security-events: read|write|none
+  # statuses: read|write|none
 
 jobs:
   release-please:
