@@ -4,7 +4,9 @@ on:
     branches:
       - master
 
-permissions: write-all
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   release-please:
@@ -14,7 +16,6 @@ jobs:
         id: release
         with:
           release-type: simple
-          fork: true
 
   skip-ci:
     needs: release-please
