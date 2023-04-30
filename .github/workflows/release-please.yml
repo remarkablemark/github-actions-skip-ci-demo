@@ -1,0 +1,35 @@
+name: Release Please
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: simple
+          fork: true
+
+  skip-ci:
+    needs: release-please
+    runs-on: ubuntu-latest
+    if: needs.release-please.outputs.pr
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ fromJson(needs.release-please.outputs.pr).headBranchName }}
+
+      - run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          COMMIT_MESSAGE=$(git log -1 --format=%s)
+          git commit --amend -m "$COMMIT_MESSAGE [skip ci]"
+          git push --force
