@@ -11,6 +11,8 @@ permissions:
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    outputs:
+      release_outputs: ${{ steps.release.outputs }}
     steps:
       - uses: google-github-actions/release-please-action@v3
         id: release
@@ -20,11 +22,11 @@ jobs:
   skip-ci:
     needs: release-please
     runs-on: ubuntu-latest
-    if: needs.release-please.outputs.pr
+    if: needs.release-please.outputs.release_outputs.release_created
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ fromJson(needs.release-please.outputs.pr).headBranchName }}
+          ref: ${{ fromJson(needs.release-please.release_outputs.pr).headBranchName }}
 
       - run: |
           git config --global user.name 'github-actions[bot]'
