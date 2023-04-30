@@ -6,11 +6,11 @@ on:
 
 permissions:
   actions: write
-  # checks: read|write|none
+  checks: read|write|none
   contents: write
-  # deployments: read|write|none
-  # id-token: read|write|none
-  # issues: read|write|none
+  deployments: read|write|none
+  id-token: read|write|none
+  issues: read|write|none
   # discussions: read|write|none
   # packages: read|write|none
   # pages: read|write|none
